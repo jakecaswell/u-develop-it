@@ -1,6 +1,8 @@
+Drop Table If Exists votes;
 Drop Table If Exists candidates;
 Drop Table If Exists parties;
 Drop Table If Exists voters;
+
 
 Create Table parties (
     id Integer AUTO_INCREMENT PRIMARY KEY,
@@ -23,4 +25,14 @@ Create Table voters (
     last_name Varchar(30) NOT NULL,
     email Varchar(50) NOT NULL,
     created_at Datetime Default CURRENT_TIMESTAMP
+);
+
+Create Table votes (
+    id Integer AUTO_INCREMENT Primary Key,
+    voter_id INTEGER NOT NULL,
+    candidate_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uc_voter UNIQUE (voter_id),
+    CONSTRAINT fk_voter FOREIGN KEY (voter_id) REFERENCES voters(id) ON DELETE CASCADE,
+    CONSTRAINT fk_candidate FOREIGN KEY (voter_id) REFERENCES candidates(id) ON DELETE CASCADE
 );
